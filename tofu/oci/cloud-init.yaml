@@ -1,0 +1,76 @@
+#cloud-config
+hostname: ${hostname}
+timezone: ${timezone}
+manage_etc_hosts: true
+
+packages:
+  - docker.io
+  - docker-compose-v2
+  - git
+  - curl
+  - wget
+  - unzip
+  - jq
+  - htop
+  - ncdu
+  - ufw
+  - fail2ban
+  - chrony
+  - ca-certificates
+  - gnupg
+  - lsb-release
+
+write_files:
+  - path: /etc/docker/daemon.json
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        },
+        "storage-driver": "overlay2"
+      }
+    owner: root:root
+    permissions: '0644'
+
+  - path: /etc/ufw/ufw.conf
+    content: |
+      ENABLED=yes
+    owner: root:root
+    permissions: '0644'
+
+  - path: /etc/fail2ban/jail.local
+    content: |
+      [DEFAULT]
+      bantime = 3600
+      findtime = 600
+      maxretry = 3
+      backend = systemd
+
+      [sshd]
+      enabled = true
+      port = ssh
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+    owner: root:root
+    permissions: '0644'
+
+runcmd:
+  - systemctl enable docker
+  - systemctl start docker
+  - usermod -aG docker ubuntu
+  - ufw --force enable
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow from 100.64.0.0/10 to any port 41641 proto udp comment 'Tailscale'
+  - ufw allow from ${admin_cidr} to any port 22 proto tcp comment 'Admin SSH'
+  - systemctl enable fail2ban
+  - systemctl start fail2ban
+  - systemctl enable chrony
+  - systemctl start chrony
+  - mkdir -p /opt/coolify /opt/n8n /opt/gitea /opt/backups
+  - chown -R ubuntu:ubuntu /opt/coolify /opt/n8n /opt/gitea /opt/backups
+
+final_message: "monolith-a1 bootstrap complete. SSH available. Run 'docker --version' to verify."

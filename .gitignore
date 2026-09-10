@@ -1,0 +1,71 @@
+# OpenTofu/Terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+tofu.plan
+
+# Secrets
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.local
+.env.*.local
+secrets/
+*.secret
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Backups
+backups/
+*.sql.gz
+*.zip
+*.sqlite3
+*.tar.gz
+
+# Docker
+docker-compose.override.yml
+
+# Node
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Rclone
+~/.config/rclone/rclone.conf
+
+# Tailscale
+/var/lib/tailscale/
+
+# Cloudflare
+*.cfargotunnel.com
