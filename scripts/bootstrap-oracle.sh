@@ -27,8 +27,12 @@ apt-get install -y \
   gnupg \
   lsb-release \
   rclone \
-  wireguard \
-  tailscale
+  wireguard
+
+# Tailscale (official repo — not in Ubuntu archives)
+if ! command -v tailscale >/dev/null 2>&1; then
+  curl -fsSL https://tailscale.com/install.sh | sh || echo "WARNING: tailscale install failed, continuing without it"
+fi
 
 echo "=== Installing OpenTofu ==="
 curl -fsSL https://get.opentofu.org/install.sh | bash
