@@ -1,0 +1,37 @@
+# Cloud Build: deploys demo app to Cloud Run (free 120 build-min/day)
+# Trigger: push to main. No GitHub Actions needed.
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/demos/app:$SHORT_SHA'
+      - '.'
+    dir: 'demo-app'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/demos/app:$SHORT_SHA'
+    dir: 'demo-app'
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'demo'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/demos/app:$SHORT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--min-instances=0'
+      - '--max-instances=10'
+      - '--memory=512Mi'
+      - '--cpu=1'
+
+substitutions:
+  _REGION: us-central1
+
+options:
+  machineType: 'E2_MEDIUM'
+  logging: CLOUD_LOGGING_ONLY
