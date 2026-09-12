@@ -34,8 +34,8 @@ if ! command -v tailscale >/dev/null 2>&1; then
   curl -fsSL https://tailscale.com/install.sh | sh || echo "WARNING: tailscale install failed, continuing without it"
 fi
 
-echo "=== Installing OpenTofu ==="
-curl -fsSL https://get.opentofu.org/install.sh | bash
+echo "=== Installing OpenTofu (optional on app server) ==="
+curl -fsSL https://get.opentofu.org/install.sh | bash || echo "WARNING: opentofu install failed, continuing without it"
 
 echo "=== Configuring Docker ==="
 cat > /etc/docker/daemon.json <<'EOF'
@@ -90,35 +90,19 @@ echo "=== Setting up Tailscale ==="
 echo "=== Creating directories ==="
 mkdir -p /opt/{coolify,n8n,gitea,vaultwarden,jellyfin,backups,scripts}
 chown -R ubuntu:ubuntu /opt/coolify /opt/n8n /opt/gitea /opt/vaultwarden /opt/jellyfin /opt/backups /opt/scripts
+# NOTE: this image uses opc (uid 1000) for container volumes; n8n data dir must
+# be writable by uid 1000 and N8N_ENCRYPTION_KEY must be set (see runbook).
+mkdir -p /opt/n8n/data && chown 1000:1000 /opt/n8n/data && chmod 775 /opt/n8n/data
 
 echo "=== Creating docker networks ==="
 docker network create monolith || true
 docker network create coolify || true
 
-echo "=== Creating Coolify docker-compose ==="
-cat > /opt/coolify/docker-compose.yaml <<'EOF'
-version: '3.8'
-services:
-  coolify:
-    image: ghcr.io/coollabsio/coolify:latest
-    container_name: coolify
-    volumes:
-      - ./data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-    environment:
-      - APP_URL=https://coolify.${DOMAIN}
-    networks:
-      - coolify
-      - monolith
-networks:
-  coolify:
-    external: true
-  monolith:
-    external: true
-EOF
+echo "=== Installing Coolify (official installer: postgres+redis+soketi) ==="
+cd /opt/coolify
+curl -fsSL https://cdn.coollabs.io/coolify/install.sh -o install.sh
+bash install.sh || echo "WARNING: coolify install failed, check /data/coolify/source/*.log"
+cd -
 
 echo "=== Creating n8n docker-compose ==="
 cat > /opt/n8n/docker-compose.yaml <<'EOF'
@@ -353,6 +337,7 @@ systemctl enable monolith-backup.timer
 systemctl start monolith-backup.timer
 
 echo "=== Creating rclone config template ==="
+mkdir -p /home/ubuntu/.config/rclone
 cat > /home/ubuntu/.config/rclone/rclone.conf.template <<'EOF'
 [r2]
 type = s3
