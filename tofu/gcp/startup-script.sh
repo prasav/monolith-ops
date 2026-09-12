@@ -52,7 +52,7 @@ ufw --force enable
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow from 100.64.0.0/10 to any port 41641 proto udp comment 'Tailscale'
-ufw allow from ${ADMIN_CIDR} to any port 22 proto tcp comment 'Admin SSH'
+ufw allow from ${admin_cidr} to any port 22 proto tcp comment 'Admin SSH'
 
 # Configure fail2ban
 cat > /etc/fail2ban/jail.local <<'EOF'
@@ -115,16 +115,16 @@ DATE=$(date +%Y%m%d-%H%M%S)
 BACKUP_DIR="/opt/monolith/backups"
 
 # Backup Oracle DB via SSH (requires SSH key)
-# ssh ubuntu@${ORACLE_IP} "docker exec n8n-postgres pg_dump -U n8n n8n" | gzip > ${BACKUP_DIR}/n8n-${DATE}.sql.gz
+# ssh ubuntu@$${ORACLE_IP} "docker exec n8n-postgres pg_dump -U n8n n8n" | gzip > $${BACKUP_DIR}/n8n-$${DATE}.sql.gz
 
 # Backup Gitea
-# ssh ubuntu@${ORACLE_IP} "docker exec gitea gitea dump -c /data/gitea/conf/app.ini" > ${BACKUP_DIR}/gitea-${DATE}.zip
+# ssh ubuntu@$${ORACLE_IP} "docker exec gitea gitea dump -c /data/gitea/conf/app.ini" > $${BACKUP_DIR}/gitea-$${DATE}.zip
 
 # Sync to R2
-rclone sync ${BACKUP_DIR} r2:monolith-ops-backups/gcp-watchdog --progress
+rclone sync $${BACKUP_DIR} r2:monolith-ops-backups/gcp-watchdog --progress
 
 # Cleanup old backups (keep 7 days)
-find ${BACKUP_DIR} -type f -mtime +7 -delete
+find $${BACKUP_DIR} -type f -mtime +7 -delete
 BACKUP_EOF
 
 chmod +x /opt/monolith/scripts/backup.sh

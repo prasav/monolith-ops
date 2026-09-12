@@ -1,8 +1,9 @@
 # Cloud Run services (serverless demos, min-instances=0)
 
 resource "google_cloud_run_v2_service" "demo" {
-  name     = "demo-app"
-  location = var.region
+  name                = "demo-app"
+  location            = var.region
+  deletion_protection = false
   template {
     containers {
       image = "gcr.io/cloudrun/hello"
@@ -19,8 +20,8 @@ resource "google_cloud_run_v2_service" "demo" {
     }
   }
   traffic {
-    percent         = 100
-    latest_revision = true
+    percent = 100
+    type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
   }
   labels = {
     managed-by = "monolith-ops"
@@ -29,11 +30,12 @@ resource "google_cloud_run_v2_service" "demo" {
 
 # Firestore database (free 1 GB)
 resource "google_firestore_database" "main" {
-  project     = var.project_id
-  name        = "(default)"
-  location_id = "nam5"  # Multi-region US
-  type        = "FIRESTORE_NATIVE"
-  deletion_protection_state = "DELETE_PROTECTION_ENABLED"
+  project                 = var.project_id
+  name                    = "(default)"
+  location_id             = "nam5" # Multi-region US
+  type                    = "FIRESTORE_NATIVE"
+  delete_protection_state = "DELETE_PROTECTION_ENABLED"
+  deletion_policy         = "DELETE"
 }
 
 # BigQuery dataset for analytics

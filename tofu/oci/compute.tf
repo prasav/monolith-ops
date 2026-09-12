@@ -26,8 +26,9 @@ resource "oci_core_instance" "a1_flex" {
   metadata = {
     ssh_authorized_keys = file(var.ssh_public_key_path)
     user_data           = base64encode(templatefile("${path.module}/cloud-init.yaml", {
-      hostname = var.instance_hostname
-      timezone = var.timezone
+      hostname   = var.instance_hostname
+      timezone   = var.timezone
+      admin_cidr = var.admin_cidr
     }))
   }
 

@@ -28,7 +28,8 @@ resource "google_compute_instance" "e2_micro" {
     enable-oslogin = "TRUE"
   }
   metadata_startup_script = templatefile("${path.module}/startup-script.sh", {
-    timezone = var.timezone
+    timezone   = var.timezone
+    admin_cidr = var.admin_cidr
   })
   labels = {
     managed-by = "monolith-ops"
@@ -52,12 +53,10 @@ resource "google_compute_subnetwork" "subnet" {
   ip_cidr_range = "10.10.0.0/20"
   region        = var.region
   network       = google_compute_network.vpc.id
-  secondary_ip_range = [
-    {
-      range_name    = "cloud-run"
-      ip_cidr_range = "10.10.16.0/20"
-    }
-  ]
+  secondary_ip_range {
+    range_name    = "cloud-run"
+    ip_cidr_range = "10.10.16.0/20"
+  }
 }
 
 # Firewall rules - minimal, Cloudflare Tunnel handles external
@@ -109,9 +108,6 @@ resource "google_compute_router_nat" "nat" {
   region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-  log_config {
-    enable = false
-  }
 }
 
 # Budget alert - $1/month
@@ -129,29 +125,11 @@ resource "google_billing_budget" "budget" {
   }
   threshold_rules {
     threshold_percent = 0.5
-    spend_basis       = "CURRENT_SPEND"
   }
   threshold_rules {
     threshold_percent = 0.9
-    spend_basis       = "CURRENT_SPEND"
   }
   threshold_rules {
     threshold_percent = 1.0
-    spend_basis       = "CURRENT_SPEND"
   }
-  notifications_rule {
-    monitoring_notification_channels = [google_monitoring_notification_channel.budget.id]
-  }
-}
-
-resource "google_monitoring_notification_channel" "budget" {
-  display_name = "monolith-ops-budget-alert"
-  type         = "pubsub"
-  labels = {
-    topic = google_pubsub_topic.budget.name
-  }
-}
-
-resource "google_pubsub_topic" "budget" {
-  name = "monolith-ops-budget-alerts"
 }
