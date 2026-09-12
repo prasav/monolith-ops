@@ -130,6 +130,9 @@ services:
       - EXECUTIONS_MODE=queue
       - QUEUE_BULL_REDIS_HOST=redis
       - QUEUE_BULL_REDIS_PORT=6379
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_RUNNERS_MODE=internal
+      - N8N_RUNNERS_MAX_CONCURRENCY=5
     depends_on:
       - postgres
       - redis

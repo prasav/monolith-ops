@@ -1,0 +1,91 @@
+{
+  "name": "AI Assistant with Free Web Search",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ask",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-in",
+      "name": "Webhook In",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "ai-assistant-ask"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.search.brave.com/res/v1/web/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "={{ $json.query }}" },
+            { "name": "count", "value": "5" },
+            { "name": "text_decorations", "value": "false" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-Subscription-Token", "value": "={{ $credentials.braveApi.apiKey }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "brave-search",
+      "name": "Brave Web Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": { "genericAuth": { "id": null, "name": "Brave API key (generic auth)" } }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ctx",
+              "name": "search_context",
+              "value": "={{ $json.web.results.map(r => `TITLE: ${r.title}\\nURL: ${r.url}\\nSNIPPET: ${r.description}`).join('\\n---\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "qry",
+              "name": "query",
+              "value": "={{ $('Webhook In').item.json.query }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "build-context",
+      "name": "Build Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { answer_hint: 'Wire Build Context.search_context into your AI Agent / LLM node as context.', query: $json.query, search_context: $json.search_context } }}",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Webhook In": { "main": [[{ "node": "Brave Web Search", "type": "main", "index": 0 }]] },
+    "Brave Web Search": { "main": [[{ "node": "Build Context", "type": "main", "index": 0 }]] },
+    "Build Context": { "main": [[{ "node": "Respond", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}
