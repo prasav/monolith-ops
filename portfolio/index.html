@@ -4,98 +4,122 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pradeep Savalsa — Software that pays for itself</title>
-<meta name="description" content="Pradeep Savalsa, full-stack software engineer. Web apps, AI assistants and business automations — self-hosted first, so running costs stay near zero.">
+<meta name="description" content="Pradeep Savalsa, full-stack software engineer. Internal tools, RAG support bots, and n8n automations for small US businesses. Fixed scope, demo in days.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&f[]=jetbrains-mono@400,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="topbar">
-  <a class="mark" href="#top">pradeep<span class="mark-accent">.dev</span></a>
-  <div class="top-right">
-    <span class="live"><span class="pulse"></span>systems operational</span>
-    <span class="clock" id="ist-clock" title="Mumbai time">--:-- IST</span>
-    <a class="btn small" href="#contact">Hire me</a>
-  </div>
+  <a class="mark" href="#top">pradeep<span>.dev</span></a>
+  <p class="top-meta"><span class="live"><i></i>operational</span><span id="ist-clock">--:-- IST</span></p>
+  <a class="btn small" href="#contact">Hire me</a>
 </header>
 
 <main id="top">
-  <!-- HERO -->
+  <!-- HERO: asymmetric split -->
   <section class="hero">
-    <p class="kicker reveal">Full-stack engineer · Mumbai (IST) · overlaps US mornings</p>
-    <h1 class="display reveal">Software that<br><em>pays for itself.</em></h1>
-    <p class="lede reveal">I build internal tools, RAG support bots, and n8n automations for small US businesses. Fixed scope, working demo in days, running on infra you own that costs single dollars a month.</p>
-    <div class="cta-row reveal">
-      <a class="btn" href="#contact">Start a project</a>
-      <a class="btn ghost" href="#proof">See the proof</a>
+    <div class="hero-copy">
+      <p class="kicker reveal">Full-stack engineer · Mumbai (IST) · overlaps US mornings</p>
+      <h1 class="display reveal">Software<br>that <em>pays for<br>itself.</em></h1>
+      <p class="lede reveal">I build internal tools, RAG support bots, and n8n automations for small US businesses. Fixed scope, working demo in days, running on infra you own that costs single dollars a month.</p>
+      <div class="cta-row reveal">
+        <a class="btn" href="#contact">Start a project</a>
+        <a class="btn ghost" href="#proof">See the proof</a>
+      </div>
     </div>
-    <div class="term reveal" aria-label="Terminal demo">
-      <div class="term-bar"><span></span><span></span><span></span><span class="term-title">pradeep@monolith-a1: ~</span></div>
-      <pre class="term-body"><code id="typed"></code><span class="caret">▊</span></pre>
-    </div>
+    <aside class="hero-side reveal">
+      <div class="term" aria-label="Terminal demo">
+        <div class="term-bar"><span></span><span></span><span></span><span class="term-title">pradeep@monolith-a1</span></div>
+        <pre class="term-body"><code id="typed"></code><span class="caret">▊</span></pre>
+      </div>
+      <dl class="rate-card">
+        <div><dt>Infra bill, this site</dt><dd>$0.00/mo</dd></div>
+        <div><dt>Working demo</dt><dd>days, not weeks</dd></div>
+        <div><dt>Replies</dt><dd>&lt; 24h, Mon–Fri</dd></div>
+      </dl>
+    </aside>
   </section>
 
   <!-- MARQUEE -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Full-stack web apps</span><i>✦</i><span>RAG assistants</span><i>✦</i><span>n8n automation</span><i>✦</i><span>API integrations</span><i>✦</i><span>Self-hosted infra</span><i>✦</i><span>Scrapers &amp; ETL</span><i>✦</i>
-      <span>Full-stack web apps</span><i>✦</i><span>RAG assistants</span><i>✦</i><span>n8n automation</span><i>✦</i><span>API integrations</span><i>✦</i><span>Self-hosted infra</span><i>✦</i><span>Scrapers &amp; ETL</span><i>✦</i>
+      <span>Internal tools</span><i>✦</i><span>RAG support bots</span><i>✦</i><span>n8n automation</span><i>✦</i><span>API integrations</span><i>✦</i><span>Scheduled scrapers</span><i>✦</i><span>Self-hosted infra</span><i>✦</i>
+      <span>Internal tools</span><i>✦</i><span>RAG support bots</span><i>✦</i><span>n8n automation</span><i>✦</i><span>API integrations</span><i>✦</i><span>Scheduled scrapers</span><i>✦</i><span>Self-hosted infra</span><i>✦</i>
     </div>
   </div>
 
-  <!-- PROOF / LIVE PANEL -->
+  <!-- PROOF -->
   <section id="proof">
-    <p class="sec-no reveal">01 — Proof, not promises</p>
-    <h2 class="reveal">This page is the portfolio piece.</h2>
-    <p class="sub reveal">You're reading this off a server in Mumbai that I built and operate. Same box, same pipeline I'd run your project on — this page is the reference architecture.</p>
-    <div class="panel reveal">
-      <div class="panel-row head"><span>service</span><span>detail</span><span>status</span></div>
-      <div class="panel-row"><span>this site</span><span>nginx · docker · Oracle Ampere A1, ap-mumbai-1</span><span class="ok"><span class="pulse"></span>live</span></div>
-      <div class="panel-row"><span>this site's infra bill</span><span>compute + tunnel + CI, per month</span><span class="ok">$0.00</span></div>
-      <div class="panel-row"><span>media + live TV</span><span>Jellyfin 12 · ffmpeg remux debugging</span><span class="ok"><span class="pulse"></span>live</span></div>
-      <div class="panel-row"><span>automation engine</span><span>n8n + queue workers + sandboxed code</span><span class="ok"><span class="pulse"></span>live</span></div>
-      <div class="panel-row"><span>source control + CI</span><span>Gitea + self-hosted ARM runners</span><span class="ok"><span class="pulse"></span>live</span></div>
+    <p class="label reveal">The proof</p>
+    <div class="split">
+      <h2 class="reveal">This page<br>is the reference.</h2>
+      <p class="sub reveal">You're reading this off a server in Mumbai that I built and operate. Same box, same pipeline I'd run your project on.</p>
+    </div>
+    <div class="ledger reveal">
+      <div class="ledger-row head"><span>service</span><span>detail</span><span>status</span></div>
+      <div class="ledger-row"><span>this site</span><span>nginx · docker · Oracle Ampere A1, Mumbai</span><span class="ok"><i></i>live</span></div>
+      <div class="ledger-row"><span>site infra bill</span><span>compute + tunnel + CI, per month</span><span class="ok">$0.00</span></div>
+      <div class="ledger-row"><span>automation engine</span><span>n8n + queue workers + sandboxed code</span><span class="ok"><i></i>live</span></div>
+      <div class="ledger-row"><span>source control + CI</span><span>Gitea + self-hosted ARM runners</span><span class="ok"><i></i>live</span></div>
+      <div class="ledger-row"><span>media + live TV</span><span>Jellyfin 12 · ffmpeg remux debugging</span><span class="ok"><i></i>live</span></div>
     </div>
   </section>
 
-  <!-- BUILDS -->
+  <!-- BUILDS: alternating editorial rows -->
   <section id="work">
-    <p class="sec-no reveal">02 — Selected builds</p>
-    <h2 class="reveal">Running in production today.</h2>
-    <p class="sub reveal">No mockups. Every one of these is live on the same infrastructure this site runs on.</p>
-    <div class="builds">
-      <article class="build reveal">
-        <span class="build-no">/01</span>
+    <p class="label reveal">Selected builds</p>
+    <div class="split">
+      <h2 class="reveal">Live in production.<br>Not mockups.</h2>
+      <p class="sub reveal">Every one of these runs on the same infrastructure this site runs on.</p>
+    </div>
+    <article class="case reveal">
+      <span class="case-no">/01</span>
+      <div class="case-main">
         <h3>Agency cloud for $0/month</h3>
-        <p>A complete delivery platform on one 2-core ARM box: Coolify PaaS, Gitea with CI runners, secret management, tunnels, nightly off-site backups. Client staging environments cost me nothing to keep warm.</p>
-        <p class="tags">Coolify · Docker · Oracle Cloud · Cloudflare Tunnel · Tailscale</p>
-      </article>
-      <article class="build reveal">
-        <span class="build-no">/02</span>
+        <p>A complete delivery platform on one 2-core ARM box: Coolify PaaS, Gitea with CI runners, secret management, tunnels, nightly off-site backups. Client staging environments cost nothing to keep warm.</p>
+        <p class="tags">Coolify · Docker · Oracle Cloud · Cloudflare Tunnel</p>
+      </div>
+      <p class="case-metric">13 containers · 1 box · $0</p>
+    </article>
+    <article class="case reveal">
+      <span class="case-no">/02</span>
+      <div class="case-main">
         <h3>Grounded AI assistant</h3>
         <p>An n8n agent that answers from live web search instead of stale training data, with sandboxed JavaScript/Python execution for follow-up computation. The template for client support and research bots.</p>
         <p class="tags">n8n · SearXNG · Ollama · Gemini · sandbox runners</p>
-      </article>
-      <article class="build reveal">
-        <span class="build-no">/03</span>
+      </div>
+      <p class="case-metric">demo in &lt; 1 week</p>
+    </article>
+    <article class="case reveal">
+      <span class="case-no">/03</span>
+      <div class="case-main">
         <h3>Live-TV failure diagnosis</h3>
         <p>Variant-playlist channels failing in Jellyfin 12 with instant errors — traced through ffmpeg logs to sources serving subtitle-only streams to datacenter IPs, then re-engineered the delivery path around it.</p>
         <p class="tags">Jellyfin · ffmpeg · HLS · reverse proxying</p>
-      </article>
-      <article class="build reveal">
-        <span class="build-no">/04</span>
+      </div>
+      <p class="case-metric">root-caused from logs</p>
+    </article>
+    <article class="case reveal">
+      <span class="case-no">/04</span>
+      <div class="case-main">
         <h3>CI with no SaaS</h3>
-        <p>Gitea Actions fleet on ARM runners running validate/test pipelines on every push — the full GitHub-Actions loop, owned end to end, unbilled.</p>
+        <p>Gitea Actions fleet on ARM runners running validate/test pipelines on every push — the full delivery loop, owned end to end, unbilled.</p>
         <p class="tags">Gitea Actions · act runners · OpenTofu</p>
-      </article>
-    </div>
+      </div>
+      <p class="case-metric">every push tested</p>
+    </article>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES: ledger accordion -->
   <section id="services">
-    <p class="sec-no reveal">03 — Services</p>
-    <h2 class="reveal">Fixed scope. Demo first.</h2>
-    <p class="sub reveal">Fixed scope, fixed price, working demo before final payment. First one is open — the rest expand.</p>
+    <p class="label reveal">Services</p>
+    <div class="split">
+      <h2 class="reveal">Fixed scope.<br>Demo first.</h2>
+      <p class="sub reveal">Fixed price, working demo before final payment. First one is open — the rest expand.</p>
+    </div>
     <div class="svc reveal open">
       <button class="svc-head" aria-expanded="true"><span>Full-stack web apps</span><span class="plus">+</span></button>
       <div class="svc-body"><p><strong>Includes:</strong> scoped build, CI pipeline, deploy plus docs and a recorded walkthrough. <strong>Timeline:</strong> prototype in days, build in 1–3 weeks. <strong>Good fit if:</strong> you need a tool your team will open every day.</p></div>
@@ -114,9 +138,9 @@
     </div>
   </section>
 
-  <!-- STACK + PRINCIPLES -->
+  <!-- STACK -->
   <section id="stack">
-    <p class="sec-no reveal">04 — How I work</p>
+    <p class="label reveal">How I work</p>
     <h2 class="reveal">A short stack, deeply known.</h2>
     <div class="two-col">
       <div class="reveal">
@@ -131,37 +155,39 @@
         </ul>
       </div>
       <div class="reveal">
-        <h4>Principles — no fake testimonials, just rules</h4>
+        <h4>Rules — no fake testimonials, just rules</h4>
         <ul class="ticks">
-          <li><strong>Demo before deposit balance.</strong> You react to working software, not slides.</li>
+          <li><strong>Demo before the balance.</strong> You react to working software, not slides.</li>
           <li><strong>You own everything.</strong> Code, credentials, docs, a recorded walkthrough.</li>
-          <li><strong>Cheapest infra that works.</strong> If the free tier holds it, I won't sell you servers.</li>
-          <li><strong>No when it's no.</strong> If software won't fix it, I'll say so on the free call.</li>
+          <li><strong>Cheapest infra that works.</strong> If the free tier holds it, no servers sold.</li>
+          <li><strong>No when it's no.</strong> If software won't fix it, said on the free call.</li>
         </ul>
       </div>
     </div>
     <h3 class="proc-title reveal">Process</h3>
     <ol class="steps">
-      <li class="reveal"><strong>01 · Discover (free).</strong> Show me the painful workflow; I'll tell you honestly if it's automatable.</li>
-      <li class="reveal"><strong>02 · Prototype.</strong> Working demo against your real data within days.</li>
-      <li class="reveal"><strong>03 · Build.</strong> Fixed scope and price, demos every week.</li>
-      <li class="reveal"><strong>04 · Handover.</strong> Docs, keys, Loom tour. Phase two whenever you're ready.</li>
+      <li class="reveal"><strong>Discover — free.</strong> Show the painful workflow; an honest verdict on whether it automates.</li>
+      <li class="reveal"><strong>Prototype.</strong> Working demo against real data within days.</li>
+      <li class="reveal"><strong>Build.</strong> Fixed scope and price, demos every week.</li>
+      <li class="reveal"><strong>Handover.</strong> Docs, keys, video tour. Phase two whenever ready.</li>
     </ol>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT: split -->
   <section id="contact">
-    <p class="sec-no reveal">05 — Contact</p>
-    <h2 class="giant reveal">Tell me what<br>eats your week.</h2>
-    <p class="sub reveal">Currently booking for late September 2026. One paragraph on the workflow — I'll reply honestly if it's automatable.</p>
-    <div class="cta-row reveal">
-      <a class="btn big" id="email-btn" href="mailto:hello@example.com?subject=Project%3A%20my%20workflow&body=The%20manual%20work%20eating%20my%20week%3A%0A%0ATools%20we%20use%3A%0A">hello@example.com</a>
+    <p class="label reveal">Contact</p>
+    <div class="contact-grid">
+      <h2 class="giant reveal">Tell me what eats your week.</h2>
+      <div class="reveal">
+        <p class="sub">Currently booking for late September 2026. One paragraph on the workflow — an honest reply if it's automatable.</p>
+        <a class="btn big" href="mailto:hello@example.com?subject=Project%3A%20my%20workflow&body=The%20manual%20work%20eating%20my%20week%3A%0A%0ATools%20we%20use%3A%0A">hello@example.com</a>
+        <div class="cta-row">
+          <a class="btn ghost" href="https://www.upwork.com" target="_blank" rel="noopener">Upwork ↗</a>
+          <a class="btn ghost" href="https://contra.com" target="_blank" rel="noopener">Contra ↗</a>
+        </div>
+        <p class="fine">Replies within 24h, Mon–Fri (IST, overlaps US mornings).</p>
+      </div>
     </div>
-    <div class="cta-row reveal">
-      <a class="btn ghost" href="https://www.upwork.com" target="_blank" rel="noopener">Upwork ↗</a>
-      <a class="btn ghost" href="https://contra.com" target="_blank" rel="noopener">Contra ↗</a>
-    </div>
-    <p class="fine reveal">Replies within 24h, Mon–Fri (IST, overlaps US mornings).</p>
   </section>
 </main>
 

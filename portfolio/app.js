@@ -33,9 +33,16 @@ if (el) {
   io.observe(el);
 }
 
-// ---- Scroll reveal ----
+// ---- Scroll reveal with stagger ----
 const rio = new IntersectionObserver((es) => {
-  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } });
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const sibs = [...e.target.parentElement.children].filter(n => n.classList && n.classList.contains('reveal'));
+    const idx = Math.max(0, sibs.indexOf(e.target));
+    e.target.style.transitionDelay = Math.min(idx * 70, 280) + 'ms';
+    e.target.classList.add('in');
+    rio.unobserve(e.target);
+  });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(n => rio.observe(n));
 
@@ -50,6 +57,9 @@ document.querySelectorAll('.svc-head').forEach(btn => {
   });
 });
 
+// ---- First service starts open ----
+document.querySelectorAll('.svc.open .svc-body').forEach(b => { b.style.maxHeight = b.scrollHeight + 'px'; });
+
 // ---- Mumbai clock ----
 const fmt = new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', hour12: false });
 const stamp = () => {
@@ -59,6 +69,3 @@ const stamp = () => {
   if (b) b.textContent = s;
 };
 stamp(); setInterval(stamp, 20000);
-
-// ---- First service starts open ----
-document.querySelectorAll('.svc.open .svc-body').forEach(b => { b.style.maxHeight = b.scrollHeight + 'px'; });
