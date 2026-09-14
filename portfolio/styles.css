@@ -66,7 +66,7 @@ h2.giant{font-size:clamp(46px,6.5vw,92px)}
 .rate-card{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px}
 .rate-card div{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
 .rate-card dt{font-family:var(--font-m);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
-.rate-card dd{font-family:var(--font-d);font-weight:600;font-size:17px}
+.rate-card dd{font-family:var(--font-d);font-weight:600;font-size:15px;line-height:1.35}
 
 /* marquee */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0;margin:0 -40px}

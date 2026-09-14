@@ -9,17 +9,15 @@ const lines = [
 ];
 const el = document.getElementById('typed');
 if (el) {
-  let li = 0, ci = 0, out = '';
+  let li = 0, ci = 0;
   const rendered = () => {
-    el.innerHTML = out
-      + lines.slice(0, li).map(l => `<span class="${l.c}">${l.t}</span>`).join('\n')
+    el.innerHTML = lines.slice(0, li).map(l => `<span class="${l.c}">${l.t}</span>`).join('\n')
       + (li < lines.length ? `\n<span class="${lines[li].c}">${lines[li].t.slice(0, ci)}</span>` : '');
   };
   const tick = () => {
     if (li >= lines.length) return;
     ci++;
     if (ci > lines[li].t.length) {
-      out += `<span class="${lines[li].c}">${lines[li].t}</span>\n`;
       li++; ci = 0;
       setTimeout(tick, lines[li - 1].c === 'p' ? 500 : 250);
     } else {
